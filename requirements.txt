@@ -35,10 +35,7 @@ Click==7.0
 clint==0.5.1
 conda==4.3.16
 conda-build==2.1.5
-# conda-package-handling==1.6.0
-# conda-verify==3.4.2
 configparser==4.0.2
-# ConfigSpace==0.4.10
 confuse==1.0.0
 crayons==0.3.0
 cryptography==2.8
@@ -118,7 +115,6 @@ matplotlib==3.1.2
 mccabe==0.6.1
 mechanize==0.4.5
 missingno==0.4.2
-mistune==0.8.4
 mkl-fft==1.0.15
 mkl-random==1.1.0
 mkl-service==2.3.0
