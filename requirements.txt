@@ -35,8 +35,8 @@ Click==7.0
 clint==0.5.1
 conda==4.3.16
 conda-build==2.1.5
-conda-package-handling==1.6.0
-conda-verify==3.4.2
+# conda-package-handling==1.6.0
+# conda-verify==3.4.2
 configparser==4.0.2
 ConfigSpace==0.4.10
 confuse==1.0.0
