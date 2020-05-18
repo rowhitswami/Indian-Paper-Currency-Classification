@@ -35,7 +35,6 @@ Click==7.0
 clint==0.5.1
 conda==4.3.16
 conda-build==2.1.5
-ConfigSpace==0.4.6
 configparser==4.0.2
 confuse==1.0.0
 crayons==0.3.0
@@ -43,6 +42,7 @@ cryptography==2.8
 cycler==0.10.0
 cymem==2.0.3
 Cython==0.29.14
+ConfigSpace==0.4.6
 dask==2.9.0
 decorator==4.4.1
 defusedxml==0.6.0
