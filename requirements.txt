@@ -120,7 +120,6 @@ more-itertools==7.2.0
 msgpack==0.6.2
 murmurhash==1.0.2
 mysql-connector==2.2.9
-navigator-updater==0.2.1
 networkx==2.3
 numba==0.46.0
 numpy==1.18.1
