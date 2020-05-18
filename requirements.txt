@@ -42,7 +42,6 @@ cryptography==2.8
 cycler==0.10.0
 cymem==2.0.3
 Cython==0.29.14
-ConfigSpace==0.4.6
 dask==2.9.0
 decorator==4.4.1
 defusedxml==0.6.0
