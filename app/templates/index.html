@@ -30,13 +30,13 @@
       <div class="row">
         <div class="col-6 text-center">
           <h2>Select a file to upload</h2>
-            {% with messages = get_flashed_messages() %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
-              <ul class="list-unstyled">
-              {% for message in messages %}
-                <li class="bg-warning text-white">{{ message }}</li>
+              {% for category, message in messages %}
+                <div class="alert {{category}}" role="alert">
+                  {{message}}
+                </div>
               {% endfor %}
-              </ul>
               {% endif %}
             {% endwith %}
           <form class="md-form" method="post" action="/" enctype="multipart/form-data">
