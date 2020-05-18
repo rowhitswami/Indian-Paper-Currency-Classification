@@ -33,7 +33,6 @@ cffi==1.13.1
 chardet==3.0.4
 Click==7.0
 clint==0.5.1
-colorama==0.4.1
 conda==4.8.3
 conda-build==3.18.9
 conda-package-handling==1.6.0
