@@ -1,9 +1,5 @@
 from flask_cors import CORS
-from flask import Flask, request, render_template, json, jsonify, send_from_directory
-import json
-import cv2
 import numpy as np
-import io
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array, load_img
 import os
@@ -25,10 +21,10 @@ graph = tf.get_default_graph()
 set_session(sess)
 
 global model
-model = load_model('model/model.h5')
+model = load_model('app/model/model.h5')
 
 labels = ['10', '100', '20', '200', '2000', '50', '500']
-UPLOAD_FOLDER = 'static/uploads/'
+UPLOAD_FOLDER = 'app/static/uploads/'
 app.secret_key = "12345678901"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -55,7 +51,7 @@ def upload_image():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        label = get_label('static/uploads/' + filename)
+        label = get_label('app/static/uploads/' + filename)
         return render_template('index.html', filename=filename, prediction=label)
     else:
         flash('Allowed image types are -> png, jpg, jpeg', 'alert-danger')
@@ -63,7 +59,6 @@ def upload_image():
 
 @app.route('/display/<filename>')
 def display_image(filename):
-	#print('display_image filename: ' + filename)
 	return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 def get_label(filename):
