@@ -81,11 +81,12 @@ def get_label(image_url):
 
 def process_image(image_url):
     with urllib.request.urlopen(image_url) as url:
-        img = load_img(io.BytesIO(url.read()), target_size=(150, 150))
-        img = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
-        img = img.reshape(1,150,150,3).astype('float')
-        img /= 255
-        return img
+        image_file = io.BytesIO(url.read())
+    img = load_img(image_file, target_size=(150, 150))
+    img = img_to_array(img)
+    img = img.reshape(1,150,150,3).astype('float')
+    img /= 255
+    return img
 
 def get_image_link(filename):
     return "https://indian-currency-prediction.s3.ap-south-1.amazonaws.com/uploads/" + filename
