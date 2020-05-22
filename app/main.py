@@ -80,10 +80,12 @@ def get_label(image_url):
     return label
 
 def process_image(image_url):
+    extension = image_url.split(".")[-1]
     with urllib.request.urlopen(image_url) as url:
-        image_file = io.BytesIO(url.read())
-    img = load_img(image_file, target_size=(150, 150))
-    img = img_to_array(img)
+        with open('app/static/tmp/temp.' + extension, 'wb+') as f:
+            f.write(url.read())
+    img = load_img('app/static/tmp/temp.' + extension, target_size=(150, 150))
+    img = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
     img = img.reshape(1,150,150,3).astype('float')
     img /= 255
     return img
