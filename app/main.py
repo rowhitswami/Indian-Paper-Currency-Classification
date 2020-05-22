@@ -9,17 +9,17 @@ import tensorflow as tf
 from keras.backend import set_session
 import boto3
 import io
-from config import LABELS, ALLOWED_EXTENSIONS, AWS_ACCESS_KEY, AWS_SECRET_KEY
-from config import BUCKET, UPLOAD_FOLDER, REGION_HOST, FLASK_SECRET_KEY
+from config import *
+import urllib.request
 
 app = Flask(__name__)
 app.secret_key = FLASK_SECRET_KEY
 CORS(app)
 
-config = tf.ConfigProto(device_count = {'GPU': 0})
-sess = tf.Session(config=config)
+config = tf.compat.v1.ConfigProto(device_count = {'GPU': 0})
+sess = tf.compat.v1.Session(config=config)
 global graph
-graph = tf.get_default_graph()
+graph = tf.compat.v1.get_default_graph()
 set_session(sess)
 
 global model
