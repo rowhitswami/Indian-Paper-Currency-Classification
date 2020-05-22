@@ -6,6 +6,6 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 BUCKET = 'indian-currency-prediction'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UPLOAD_FOLDER = 'uploads/'
-TMP_FOLDER = '/app/static/tmp/'
+TMP_FOLDER = '/static/tmp/'
 REGION_HOST = 'ap-south-1'
 FLASK_SECRET_KEY = 'Sssshhhhh.....!!!!'
