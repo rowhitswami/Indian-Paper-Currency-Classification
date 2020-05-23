@@ -1,3 +1,7 @@
+import uuid
+import boto3
+import pickle
+import datetime
 import boto3
 from config import *
 from PIL import Image
@@ -15,17 +19,23 @@ graph = tf.compat.v1.get_default_graph()
 set_session(sess)
 model = load_model(MODEL_PATH)
 
-def get_label(file_path):
+def get_label(filename, file_path):
     global sess
     global graph
     processed_image = process_image(file_path)
     with graph.as_default():
         set_session(sess)
         classes = model.predict(processed_image)
-    label_classes = zip(LABELS, classes.tolist()[0])
-    max_label_class = sorted(label_classes, key = lambda t: t[1])[-1]
-    label = max_label_class[0]
-    return label
+    predicted_labels = classes.tolist()[0]
+    saved_predictions = save_prediction_to_s3(filename, predicted_labels)
+    if saved_predictions:
+        label_classes = zip(LABELS, predicted_labels)
+        max_label_class = sorted(label_classes, key = lambda t: t[1])[-1]
+        label = max_label_class[0]
+        return label
+    else:
+        label = None
+        return label
 
 def process_image(file_path):
     img = load_img(file_path, target_size=(150,150))
@@ -45,6 +55,19 @@ def upload_file_to_s3(file_path, filename):
         else:
             return False
     except FileNotFoundError:
+        return False
+
+def save_prediction_to_s3(image_filename, predictions):
+    filename = str(uuid.uuid4())
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    data = [timestamp, UPLOAD_DIR + image_filename]
+    data += predictions
+    data = pickle.dumps(data)
+    try:
+        s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
+        s3.put_object(Body=data, Bucket=BUCKET, Key=PRED_DIR + filename)
+        return True
+    except:
         return False
 
 def get_image_link(filename):
