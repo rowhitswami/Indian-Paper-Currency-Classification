@@ -20,6 +20,7 @@ def main():
 def upload_image():
     if 'file' not in request.files:
         flash('No Image Found!', 'alert-danger')
+        # file deepcode ignore
         return redirect(request.url)
     
     file = request.files['file']
