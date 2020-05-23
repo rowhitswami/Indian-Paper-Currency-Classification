@@ -6,7 +6,13 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import tensorflow as tf
 from keras.backend import set_session
-from config import *
+import os
+
+LABELS = ['10', '100', '20', '200', '2000', '50', '500']
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+MODEL = 'app/model/model.h5'
+UPLOAD_FOLDER = 'app/static/uploads/'
+FLASK_SECRET_KEY = 'Sssshhhhh.....!!!!'
 
 app = Flask(__name__)
 app.secret_key = FLASK_SECRET_KEY
