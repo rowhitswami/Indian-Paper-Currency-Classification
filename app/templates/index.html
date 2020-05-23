@@ -48,8 +48,8 @@
           </form>
         </div>
         <div class="col-6">
-          {% if image_url %}
-            <img class="img-fluid" src="{{image_url}}" >
+          {% if filename %}
+            <img class="img-fluid" src="{{ url_for('display_image', filename=filename) }}" >
           {% endif %}
           {% if prediction %}
             <h3 class="text-success">{{prediction}}</h3>
