@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from flask_cors import CORS
-from processing import get_label
+from processing import get_label, upload_file_to_s3, get_image_link
 from werkzeug.utils import secure_filename
 from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS
 from flask import Flask, flash, request, redirect, url_for, render_template
@@ -29,16 +29,20 @@ def upload_image():
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        label = get_label('app/static/uploads/' + filename)
-        return render_template('index.html', filename=filename, prediction=label)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(os.path.join(file_path))
+        uploaded = upload_file_to_s3(file_path, filename)
+        if uploaded:
+            image_url = get_image_link(filename)
+            label = get_label(file_path)
+            os.remove(file_path)
+            return render_template('index.html', image_url=image_url, prediction=label)
+        else:
+            flash("Couldn't process and upload your image. Please try again!", 'alert-danger')
+            return redirect(request.url)
     else:
         flash('Allowed image types are -> png, jpg, jpeg', 'alert-danger')
         return redirect(request.url)
-
-@app.route('/display/<filename>')
-def display_image(filename):
-	return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
