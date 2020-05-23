@@ -2,33 +2,33 @@ from flask_cors import CORS
 import numpy as np
 from keras.models import load_model
 from keras.preprocessing.image import img_to_array, load_img
+import os
+import urllib.request
 from flask import Flask, flash, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import tensorflow as tf
 from keras.backend import set_session
-import os
-
-LABELS = ['10', '100', '20', '200', '2000', '50', '500']
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-FLASK_SECRET_KEY = 'Sssshhhhh.....!!!!'
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL = os.path.join(BASE_DIR, 'app/model/model.h5')
-UPLOAD_FOLDER = os.path.join(BASE_DIR, 'app/static/uploads/')
 
 app = Flask(__name__)
-app.secret_key = FLASK_SECRET_KEY
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 CORS(app)
 
-config = tf.compat.v1.ConfigProto(device_count = {'GPU': 0})
-sess = tf.compat.v1.Session(config=config)
-
+config = tf.ConfigProto(
+        device_count = {'GPU': 0}
+    )
+sess = tf.Session(config=config)
 global graph
-graph = tf.compat.v1.get_default_graph()
+graph = tf.get_default_graph()
 set_session(sess)
 
 global model
-model = load_model(MODEL)
+model = load_model('app/model/model.h5')
+
+labels = ['10', '100', '20', '200', '2000', '50', '500']
+UPLOAD_FOLDER = 'app/static/uploads/'
+app.secret_key = "12345678901"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -59,21 +59,20 @@ def upload_image():
 
 @app.route('/display/<filename>')
 def display_image(filename):
-	#print('display_image filename: ' + filename)
 	return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 def get_label(filename):
     global sess
     global graph
-    processed_image = process_image(filename)	
-    with graph.as_default():	
+    processed_image = process_image(filename)
+    with graph.as_default():
         set_session(sess)
         classes = model.predict(processed_image)
-    label_classes = zip(LABELS, classes.tolist()[0])
+    label_classes = zip(labels, classes.tolist()[0])
     max_label_class = sorted(label_classes, key = lambda t: t[1])[-1]
     label = max_label_class[0]
     return label
-	
+
 def process_image(filename):
     img = load_img(filename, target_size=(150,150))
     img = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
