@@ -50,8 +50,6 @@ def upload_image():
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        print("\n\n\n\n**************")
-        print(UPLOAD_FOLDER)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         label = get_label('app/static/uploads/' + filename)
         return render_template('index.html', filename=filename, prediction=label)
