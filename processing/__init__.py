@@ -2,6 +2,7 @@ import uuid
 import boto3
 import pickle
 import datetime
+import boto3
 from config import *
 from PIL import Image
 import tensorflow as tf
