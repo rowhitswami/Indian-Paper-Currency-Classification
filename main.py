@@ -45,7 +45,7 @@ def upload_image():
         filename = secure_filename(file.filename)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename) 
         file.save(file_path)
-        label = get_label('app/static/uploads/' + filename)
+        label = get_label(file_path)
         return render_template('index.html', filename=filename, prediction=label)
     else:
         flash('Allowed image types are -> png, jpg, jpeg', 'alert-danger')

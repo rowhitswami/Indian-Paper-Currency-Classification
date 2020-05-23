@@ -9,6 +9,6 @@ REGION_HOST = 'ap-south-1'
 # Local Credentials
 LABELS = ['10', '100', '20', '200', '2000', '50', '500']
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-MODEL = 'app/model/model.h5'
-UPLOAD_FOLDER = 'app/static/uploads/'
+MODEL = 'model/model.h5'
+UPLOAD_FOLDER = 'static/uploads/'
 FLASK_SECRET_KEY = 'Sssshhhhh.....!!!!'

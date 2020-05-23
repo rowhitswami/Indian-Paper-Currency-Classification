@@ -1,10 +1,5 @@
+.idea
+**/__pycache__/
 *.jpg
-*.jpeg
 *.png
-
-*.DS_Store
-.DS_Store
-__pycache__/
-
-# ignoring notebook checkpoints
-/.ipynb_checkpoints/
+*.jpeg
