@@ -35,9 +35,13 @@ def upload_image():
         uploaded = upload_file_to_s3(file_path, filename)
         if uploaded:
             image_url = get_image_link(filename)
-            label = get_label(file_path)
-            os.remove(file_path)
-            return render_template('index.html', image_url=image_url, prediction=label)
+            label = get_label(filename, file_path)
+            if label:
+                os.remove(file_path)
+                return render_template('index.html', image_url=image_url, prediction=label)
+            else:
+                flash("Unable to save predictions. Please try again!", 'alert-danger')
+                return redirect(request.url)
         else:
             flash("Couldn't process and upload your image. Please try again!", 'alert-danger')
             return redirect(request.url)
