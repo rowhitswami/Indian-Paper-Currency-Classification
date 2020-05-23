@@ -10,10 +10,10 @@ import os
 
 LABELS = ['10', '100', '20', '200', '2000', '50', '500']
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-MODEL = 'app/model/model.h5'
-UPLOAD_FOLDER = 'app/static/uploads/'
 FLASK_SECRET_KEY = 'Sssshhhhh.....!!!!'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL = os.path.join(BASE_DIR, 'app/model/model.h5')
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'app/static/uploads/')
 
 app = Flask(__name__)
 app.secret_key = FLASK_SECRET_KEY
@@ -51,7 +51,7 @@ def upload_image():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         print("\n\n\n\n**************")
-        print(BASE_DIR)
+        print(UPLOAD_FOLDER)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         label = get_label('app/static/uploads/' + filename)
         return render_template('index.html', filename=filename, prediction=label)
