@@ -2,7 +2,6 @@ import uuid
 import boto3
 import pickle
 import datetime
-import boto3
 from config import *
 from PIL import Image
 import tensorflow as tf
@@ -31,11 +30,11 @@ def get_label(filename, file_path):
     if saved_predictions:
         label_classes = zip(LABELS, predicted_labels)
         max_label_class = sorted(label_classes, key = lambda t: t[1])[-1]
-        label = max_label_class[0]
-        return label
+        max_label = max_label_class[0]
+        return max_label, predicted_labels
     else:
-        label = None
-        return label
+        max_label = predicted_labels = None
+        return max_label, predicted_labels
 
 def process_image(file_path):
     img = load_img(file_path, target_size=(150,150))
@@ -83,3 +82,6 @@ def compress_image(file_path):
         return True
     except FileNotFoundError:
         return False
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
