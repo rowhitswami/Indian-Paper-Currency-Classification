@@ -1,61 +1,62 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Indian Paper Currency Prediction</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
 
-    <!-- JQuery -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
+<head>
+  <title>Indian Paper Currency Prediction</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
+  <link href="{{url_for('static', filename='frontend/css/styles.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='frontend/css/toastr.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='frontend/css/loading-bar.css')}}" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  </head>
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
+  </script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='frontend/js/toastr.min.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='frontend/js/loading-bar.js')}}"></script>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark primary-color align-items-center">
-        <h2 class="navbar-brand" style="margin-left: 36%; font-size: 28px;">Indian Paper Currency Prediction</h2>
-    </nav>
-    <div class="container pt-5">
-      <div class="row">
-        <div class="col-6 text-center">
-          <h2>Select a file to upload</h2>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert {{category}}" role="alert">
-                  {{message}}
-                </div>
-              {% endfor %}
-              {% endif %}
-            {% endwith %}
-          <form class="md-form" method="post" action="/" enctype="multipart/form-data">
-              <input type="file" name="file" autocomplete="off" required>
-            <div class="mt-5">
-              <button class="btn btn-success" type="submit" value="Upload">Upload</button>
-            </div>
-          </form>
-        </div>
-        <div class="col-6">
-          {% if image_url %}
-            <img class="img-fluid" src="{{ image_url }}" >
-          {% endif %}
-          {% if prediction %}
-            <h3 class="text-success">{{prediction}}</h3>
-          {% endif %}
-        </div>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark primary-color align-items-center">
+    <h2 class="navbar-brand">Indian Paper Currency Prediction</h2>
+  </nav>
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 text-center">
+        <h2>Select a file to upload</h2>
+        <form id="upload-file" class="md-form" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" autocomplete="off" required>
+          <div class="mt-5">
+            <button id="upload-file-btn" class="btn btn-success" type="button" value="Upload">Upload</button>
+          </div>
+          <div id="overlay">
+          </div>
+        </form>
+        <div id="image"></div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 text-center">
+        <h3 class="text-success pt-5" id="prediction"></h3>
+        <div id="chart"></div>
       </div>
     </div>
-  </body>
+  </div>
+  <script type="text/javascript" src="{{url_for('static', filename='frontend/js/main.js')}}"></script>
+</body>
+
 </html>
