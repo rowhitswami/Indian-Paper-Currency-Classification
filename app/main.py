@@ -1,10 +1,18 @@
 import os
+import sentry_sdk
 import numpy as np
 from flask_cors import CORS
-from processing import get_label, upload_file_to_s3, get_image_link, allowed_file
 from werkzeug.utils import secure_filename
-from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, LABELS
+from sentry_sdk.integrations.flask import FlaskIntegration
 from flask import Flask, request, redirect, url_for, render_template, jsonify
+from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, LABELS
+from processing import get_label, upload_file_to_s3, get_image_link, allowed_file
+
+# Sentry Initialization
+sentry_sdk.init(
+    dsn="https://31fb27dd412f4ad39abec5308a6bedd4@o397473.ingest.sentry.io/5251962",
+    integrations=[FlaskIntegration()]
+)
 
 # Flask config
 app = Flask(__name__)
