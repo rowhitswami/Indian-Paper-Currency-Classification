@@ -12,5 +12,6 @@ PRED_DIR = 'predictions/'
 LABELS = ['10', '100', '20', '200', '2000', '50', '500']
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 UPLOAD_FOLDER = 'app/static/uploads/'
-FLASK_SECRET_KEY = 'Sssshhhhh.....!!!!'
+FLASK_SECRET_KEY = os.urandom(12).hex()
 MODEL_PATH = 'app/model/model.h5'
+WTF_CSRF_TIME_LIMIT = 600
