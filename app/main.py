@@ -3,9 +3,10 @@ import sentry_sdk
 import numpy as np
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+from flask_wtf.csrf import CSRFProtect, CSRFError
 from sentry_sdk.integrations.flask import FlaskIntegration
 from flask import Flask, request, redirect, url_for, render_template, jsonify
-from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, LABELS
+from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, LABELS, WTF_CSRF_TIME_LIMIT
 from processing import get_label, upload_file_to_s3, get_image_link, allowed_file
 
 # Sentry Initialization
@@ -16,9 +17,11 @@ sentry_sdk.init(
 
 # Flask config
 app = Flask(__name__)
-CORS(app)
 app.secret_key = FLASK_SECRET_KEY
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['WTF_CSRF_TIME_LIMIT'] = WTF_CSRF_TIME_LIMIT
+CSRFProtect(app)
+CORS(app)
 
 @app.route("/", methods=["GET"])
 def main():
@@ -60,3 +63,7 @@ def upload_image():
     else:
         error = 'Allowed image types are -> png, jpg, jpeg'
         return jsonify({"error": error}), 400
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(e):
+    return jsonify({"error": e.description + " Try refreshing the page."}), 400

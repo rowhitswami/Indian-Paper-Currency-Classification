@@ -60,6 +60,7 @@
         </div>
         <h2>Select an image to upload</h2>
         <form id="upload-file" class="md-form" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <div class="file-field medium">
             <div class="btn btn-rounded btn-pink float-left waves-effect">
               <span><i class="fas fa-upload mr-2" aria-hidden="true"></i>Choose file</span>

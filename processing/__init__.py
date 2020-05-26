@@ -44,17 +44,17 @@ def process_image(file_path):
     return img
 
 def upload_file_to_s3(file_path, filename):
-    s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
-    try:
-        compressed = compress_image(file_path)
-        if compressed:
+    compressed = compress_image(file_path)
+    if compressed:
+        try:
+            s3 = boto3.client('s3', aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
             with open(file_path, 'rb') as image:
                 s3.upload_fileobj(image, BUCKET, UPLOAD_DIR + filename)
                 return True
-        else:
+        except:
             return False
-    except FileNotFoundError:
-        return False
+    else:
+            return False
 
 def save_prediction_to_s3(image_filename, predictions):
     filename = str(uuid.uuid4())

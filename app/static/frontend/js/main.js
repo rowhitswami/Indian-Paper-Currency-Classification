@@ -12,7 +12,7 @@ $(document).ready(function () {
     "onclick": null,
     "showDuration": "500",
     "hideDuration": "100",
-    "timeOut": "2000",
+    "timeOut": "3000",
     "showEasing": "swing",
     "hideEasing": "linear",
     "showMethod": "fadeIn",
