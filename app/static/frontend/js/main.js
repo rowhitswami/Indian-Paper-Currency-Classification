@@ -1,6 +1,7 @@
 $(document).ready(function () {
-  Sentry.init({ dsn: 'https://5737f2ff4a084bb9a525d5b5f7f5ea85@o397473.ingest.sentry.io/5252172' });
-  myUndefinedFunction();
+  Sentry.init({
+    dsn: 'https://5737f2ff4a084bb9a525d5b5f7f5ea85@o397473.ingest.sentry.io/5252172'
+  });
   toastr.options = {
     "closeButton": false,
     "debug": false,
@@ -18,7 +19,21 @@ $(document).ready(function () {
     "hideMethod": "fadeOut"
   }
 
+  $('#file-upload').change(function () {
+    var file = $('#file-upload')[0].files[0]
+    if (typeof (file) != 'undefined')
+      $(".file-path").text(file.name)
+    else
+      $(".file-path").text('No file chosen')
+  });
+
   $('#upload-file-btn').click(function () {
+    var file = $('#file-upload')[0].files[0]
+    if (typeof (file) == 'undefined') {
+      console.log("Coming here!!")
+      toastr.error("Please select an image to upload.", "No file chosen!")
+      return false
+    }
     $("#overlay").show(200)
     var form_data = new FormData($('#upload-file')[0]);
     var upload_progress = "<div data-preset='stripe' class='overlay-content' id='progress-bar'></div>";
@@ -62,7 +77,7 @@ $(document).ready(function () {
   $populateData = function (response) {
     var image = document.createElement("IMG");
     image.src = response.image_url;
-    image.className = "img-fluid z-depth-4 rounded";
+    image.className = "img-fluid z-depth-1-half rounded";
     $("#image").html(image);
     $("#prediction").text(response.prediction)
     $getChart(response.labels, response.data)
@@ -77,7 +92,6 @@ $(document).ready(function () {
     canv.id = 'barChart';
     $("#chart").html(canv);
     var ctxB = canv.getContext('2d');
-    // var ctxB = document.getElementById("barChart").getContext('2d');
     var myBarChart = new Chart(ctxB, {
       type: 'bar',
       data: {
