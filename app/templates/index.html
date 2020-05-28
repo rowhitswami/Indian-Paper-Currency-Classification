@@ -3,41 +3,11 @@
 
 <head>
   <title>Indian Paper Currency Prediction</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-  <!-- Google Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-  <!-- Bootstrap core CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
-  <link href="{{url_for('static', filename='frontend/css/mdb.min.css')}}" rel="stylesheet">
-  <link href="{{url_for('static', filename='frontend/css/styles.css')}}" rel="stylesheet">
-  <link href="{{url_for('static', filename='frontend/css/toastr.min.css')}}" rel="stylesheet">
-  <link href="{{url_for('static', filename='frontend/css/loading-bar.css')}}" rel="stylesheet">
-  <link rel="icon" href="{{url_for('static', filename='frontend/images/favicon.ico')}}" type="image/x-icon" />
-  <link rel="shortcut icon" href="{{url_for('static', filename='frontend/images/favicon.ico')}}" type="image/x-icon" />
-
-  <!-- JQuery -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <!-- Bootstrap tooltips -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
-  </script>
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-  <script src="https://browser.sentry-cdn.com/5.15.5/bundle.min.js"
-    integrity="sha384-wF7Jc4ZlWVxe/L8Ji3hOIBeTgo/HwFuaeEfjGmS3EXAG7Y+7Kjjr91gJpJtr+PAT" crossorigin="anonymous">
-  </script>
-  <!-- MDB core JavaScript -->
-  <script type="text/javascript" src="{{url_for('static', filename='frontend/js/mdb.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='frontend/js/toastr.min.js')}}"></script>
-  <script type="text/javascript" src="{{url_for('static', filename='frontend/js/loading-bar.js')}}"></script>
+  {% include 'base.html' %}
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark primary-color align-items-center">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color align-items-center">
     <h2 class="navbar-brand">Indian Paper Currency Prediction</h2>
     <a href="https://github.com/rowhitswami/Indian-Currency-Prediction" target="_blank" class="github-corner"
       aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250"
@@ -51,16 +21,16 @@
           fill="currentColor" class="octo-body"></path>
       </svg></a>
   </nav>
-  <div class="container pt-5">
+  <div class="container pt-4 pb-5">
     <div class="row justify-content-between">
       <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 text-center">
         <div class="mb-4" id="image">
           <img src="{{url_for('static', filename='frontend/images/placeholder.jpg')}}"
-            class="z-depth-1-half img-fluid rounded" alt="placeholder">
+            class="z-depth-2 img-fluid rounded" alt="placeholder">
         </div>
         <h2>Select an image to upload</h2>
         <form id="upload-file" class="md-form" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           <div class="file-field medium">
             <div class="btn btn-rounded btn-pink float-left waves-effect">
               <span><i class="fas fa-upload mr-2" aria-hidden="true"></i>Choose file</span>
@@ -83,6 +53,7 @@
       </div>
     </div>
   </div>
+  {% include 'consent.html' %}
   <script type="text/javascript" src="{{url_for('static', filename='frontend/js/main.js')}}"></script>
 </body>
 
