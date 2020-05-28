@@ -53,3 +53,14 @@
     animation: octocat-wave 560ms ease-in-out
   }
 }
+
+.consent-box {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+  font-size: 14px;
+  display: none;
+}

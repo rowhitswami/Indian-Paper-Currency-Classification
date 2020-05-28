@@ -19,6 +19,15 @@ $(document).ready(function () {
     "hideMethod": "fadeOut"
   }
 
+  if (localStorage.getItem('consent') === null) {
+    $(".consent-box").show(200);
+  }
+
+  $("#consent").click(function() {
+    localStorage.setItem('consent', true);
+    $(".consent-box").hide(200);
+  })
+
   $('#file-upload').change(function () {
     var file = $('#file-upload')[0].files[0]
     if (typeof (file) != 'undefined')
@@ -77,7 +86,7 @@ $(document).ready(function () {
   $populateData = function (response) {
     var image = document.createElement("IMG");
     image.src = response.image_url;
-    image.className = "img-fluid z-depth-1-half rounded";
+    image.className = "img-fluid z-depth-2 rounded";
     $("#image").html(image);
     $("#prediction").text(response.prediction)
     $getChart(response.labels, response.data)
