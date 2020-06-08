@@ -7,8 +7,8 @@
 </head>
 
 <body>
-  <nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color align-items-center">
-    <h2 class="navbar-brand">Indian Paper Currency Prediction</h2>
+  <nav class="navbar sticky-top navbar-expand-lg blue lighten-1">
+    <h4 class="white-text text-center">Indian Paper Currency Prediction</h4>
     <a href="https://github.com/rowhitswami/Indian-Currency-Prediction" target="_blank" class="github-corner"
       aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250"
         style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
@@ -24,36 +24,47 @@
   <div class="container pt-4 pb-5">
     <div class="row justify-content-between">
       <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 text-center">
-        <div class="mb-4" id="image">
+        <div id="image">
           <img src="{{url_for('static', filename='frontend/images/placeholder.jpg')}}"
             class="z-depth-2 img-fluid rounded" alt="placeholder">
         </div>
-        <h2>Select an image to upload</h2>
+        <h2 class="mt-4">Select an image to upload</h2>
         <form id="upload-file" class="md-form" method="post" enctype="multipart/form-data">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-          <div class="file-field medium">
-            <div class="btn btn-rounded btn-pink float-left waves-effect">
-              <span><i class="fas fa-upload mr-2" aria-hidden="true"></i>Choose file</span>
+          <div class="file-field medium btn-group" role="group">
+            <a class="btn-floating btn-lg btn-pink float-left waves-effect" data-toggle="tooltip"
+              data-placement="bottom" title="Choose file">
+              <i class="fas fa-paperclip" aria-hidden="true"></i>
               <input id="file-upload" type="file" name="file" autocomplete="off" required />
-            </div>
-            <div class="file-path-wrapper">
-              <p class="file-path" style="margin-top: 18px !important;">No file chosen</p>
-            </div>
+            </a>
+            <a id="camera-upload" class="btn-floating btn-lg btn-deep-purple float-left waves-effect" data-toggle="tooltip"
+              data-placement="bottom" title="Camera">
+              <i class="fas fa-camera mr-2" aria-hidden="true"></i>
+            </a>
+            <a id='click' class='btn-floating btn-lg btn-unique float-left waves-effect' style="display: none;"
+              data-toggle="tooltip" data-placement="bottom" title="Take Snapshot">
+              <i class='fas fa-circle mr-2' aria-hidden='true'></i>
+            </a>
+            <a id='reset-camera' class='btn-floating btn-sm btn-red float-left waves-effect mt-4' style="display: none;"
+              data-toggle="tooltip" data-placement="bottom" title="Cancel">
+              <i class='fas fa-times' aria-hidden='true'></i>
+            </a>
           </div>
-          <div class="mt-5">
-            <button id="upload-file-btn" class="btn btn-success btn-rounded" type="button">Upload</button>
+          <div class="mt-4">
+            <button id="upload-file-btn" class="btn btn-success btn-lg btn-rounded" type="button"><i
+                class="fas fa-cloud-upload-alt mr-2" aria-hidden="true"></i> Upload</button>
           </div>
           <div id="overlay">
           </div>
         </form>
       </div>
-      <div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 text-center">
-        <h3 class="text-success pt-5" id="prediction"></h3>
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 text-center">
         <div id="chart"></div>
       </div>
     </div>
   </div>
   {% include 'consent.html' %}
+  {% include 'footer.html' %}
   <script type="text/javascript" src="{{url_for('static', filename='frontend/js/main.js')}}"></script>
 </body>
 
