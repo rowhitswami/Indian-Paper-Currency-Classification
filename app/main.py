@@ -7,7 +7,7 @@ from flask_wtf.csrf import CSRFProtect, CSRFError
 from sentry_sdk.integrations.flask import FlaskIntegration
 from flask import Flask, request, redirect, url_for, render_template, jsonify
 from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, LABELS, WTF_CSRF_TIME_LIMIT
-from processing import get_label, upload_file_to_s3, get_image_link, allowed_file
+from processing import get_label, upload_file_to_s3, allowed_file
 
 # Sentry Initialization
 sentry_sdk.init(
@@ -44,15 +44,12 @@ def upload_image():
         file.save(os.path.join(file_path))
         uploaded = upload_file_to_s3(file_path, filename)
         if uploaded:
-            image_url = get_image_link(filename)
-            max_label, predicted_labels = get_label(filename, file_path)
-            if max_label:
+            predicted_labels = get_label(filename, file_path)
+            if predicted_labels:
                 os.remove(file_path)
                 return jsonify({
-                    "image_url": image_url,
                     "labels": LABELS,
-                    "data": predicted_labels,
-                    "prediction": max_label
+                    "data": predicted_labels
                     }), 200
             else:
                 error = "Unable to save predictions. Please try again!"

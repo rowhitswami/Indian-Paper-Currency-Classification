@@ -28,13 +28,10 @@ def get_label(filename, file_path):
     predicted_labels = classes.tolist()[0]
     saved_predictions = save_prediction_to_s3(filename, predicted_labels)
     if saved_predictions:
-        label_classes = zip(LABELS, predicted_labels)
-        max_label_class = sorted(label_classes, key = lambda t: t[1])[-1]
-        max_label = max_label_class[0]
-        return max_label, predicted_labels
+        return predicted_labels
     else:
-        max_label = predicted_labels = None
-        return max_label, predicted_labels
+        predicted_labels = None
+        return predicted_labels
 
 def process_image(file_path):
     img = load_img(file_path, target_size=(150,150))
@@ -68,9 +65,6 @@ def save_prediction_to_s3(image_filename, predictions):
         return True
     except:
         return False
-
-def get_image_link(filename):
-    return "https://" + BUCKET + ".s3." + REGION_HOST + ".amazonaws.com/uploads/" + filename
 
 def compress_image(file_path):
     try:
