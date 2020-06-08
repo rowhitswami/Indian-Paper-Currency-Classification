@@ -2,6 +2,7 @@ $(document).ready(function () {
   Sentry.init({
     dsn: 'https://5737f2ff4a084bb9a525d5b5f7f5ea85@o397473.ingest.sentry.io/5252172'
   });
+
   toastr.options = {
     "closeButton": false,
     "debug": false,
@@ -19,32 +20,95 @@ $(document).ready(function () {
     "hideMethod": "fadeOut"
   }
 
+  $('[data-toggle="tooltip"]').tooltip()
+
   if (localStorage.getItem('consent') === null) {
     $(".consent-box").show(200);
   }
 
-  $("#consent").click(function() {
+  $("#consent").click(function () {
     localStorage.setItem('consent', true);
     $(".consent-box").hide(200);
   })
 
-  $('#file-upload').change(function () {
-    var file = $('#file-upload')[0].files[0]
-    if (typeof (file) != 'undefined')
-      $(".file-path").text(file.name)
-    else
-      $(".file-path").text('No file chosen')
+  $("#camera-upload").click(function () {
+    $(this).hide()
+    $("#click").show()
+    $("#reset-camera").show()
+    Webcam.set({
+      width: $("#image").width(),
+      height: $("#image").height(),
+      image_format: 'jpeg',
+      jpeg_quality: 100
+    });
+    Webcam.attach('#image');
+  })
+
+  $("#click").click(function () {
+    $(this).hide()
+    $("#reset-camera").hide()
+    $("#camera-upload").show()
+    Webcam.snap(function (data_uri) {
+      $("#image").removeAttr("style")
+      var clicked_image = '<img class="img-fluid z-depth-2 rounded" src="' + data_uri + '"/>'
+      $("#image").html(clicked_image);
+    });
+  })
+
+  $("#reset-camera").click(function () {
+    Webcam.reset('#image');
+    $(this).hide()
+    $("#click").hide()
+    $("#camera-upload").show()
+    $("#image").removeAttr("style")
+    default_image = "<img src='/static/frontend/images/placeholder.jpg' class='z-depth-2 img-fluid rounded' alt='placeholder'>"
+    $("#image").html(default_image);
+  })
+
+  $("#file-upload").change(function () {
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var content = '<img class="img-fluid z-depth-2 rounded" src="' + e.target.result + '"/>'
+        $("#image").html(content);
+      }
+      reader.readAsDataURL(this.files[0]);
+    }
   });
 
   $('#upload-file-btn').click(function () {
-    var file = $('#file-upload')[0].files[0]
-    if (typeof (file) == 'undefined') {
-      console.log("Coming here!!")
+    if ($("#image video").length == 1) {
+      toastr.error("Please take a snapshot.", "Streaming video!")
+      return false
+    }
+
+    var ImageURL = $("#image img").attr('src');
+
+    if (ImageURL.split(".")[1] == "jpg") {
       toastr.error("Please select an image to upload.", "No file chosen!")
       return false
     }
-    $("#overlay").show(200)
+    // Split the base64 string in data and contentType
+    var block = ImageURL.split(";");
+    // Get the content type of the image
+    var contentType = block[0].split(":")[1]; // In this case "image/gif"
+    // get the real base64 content of the file
+    var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+
+    var ext = contentType.split("/")[1]
+    var image_name = Math.random().toString(36).substring(4) + "." + ext
+
+    // Convert it to a blob to upload
+    var blob = b64toBlob(realData, contentType);
+
     var form_data = new FormData($('#upload-file')[0]);
+    form_data.set("file", blob, image_name);
+    console.log(form_data)
+    $ajaxPost(form_data)
+  });
+
+  $ajaxPost = function (form_data) {
+    $("#overlay").show(200)
     var upload_progress = "<div data-preset='stripe' class='overlay-content' id='progress-bar'></div>";
     $("#overlay").html(upload_progress)
     var progress_bar = new ldBar("#progress-bar");
@@ -74,23 +138,14 @@ $(document).ready(function () {
       processData: false,
       success: function (response) {
         $("#overlay").hide(200)
-        $populateData(response)
+        $getChart(response.labels, response.data)
       },
       error: function (response) {
         $("#overlay").hide(200)
         toastr.error(response.responseJSON.error, response.statusText)
       }
     });
-  });
-
-  $populateData = function (response) {
-    var image = document.createElement("IMG");
-    image.src = response.image_url;
-    image.className = "img-fluid z-depth-2 rounded";
-    $("#image").html(image);
-    $("#prediction").text(response.prediction)
-    $getChart(response.labels, response.data)
-  }
+  };
 
   $getChart = function (labels, data) {
     data.forEach((value, index) => {
@@ -98,44 +153,89 @@ $(document).ready(function () {
     });
     $("#barChart").remove()
     var canv = document.createElement('canvas');
-    canv.id = 'barChart';
+    canv.id = 'pieChart';
+    canv.height = '280';
     $("#chart").html(canv);
     var ctxB = canv.getContext('2d');
-    var myBarChart = new Chart(ctxB, {
-      type: 'bar',
+    var pieChart = new Chart(ctxB, {
+      plugins: [ChartDataLabels],
+      type: 'pie',
       data: {
         labels: labels,
         datasets: [{
-          label: '%',
           data: data,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          backgroundColor: ["#F7464A", "#46BFBD", "#ffc107", "#303f9f", "#4D5360", "#1976d2", "#4caf50"],
+          hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#ffca28", "#3949ab", "#616774", "#1e88e5", "#66bb6a"]
         }]
       },
       options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
+        title: {
+          display: true,
+          text: "Probability of Predictions"
+        },
+        responsive: true,
+        legend: {
+          position: 'right',
+          labels: {
+            padding: 20,
+            boxWidth: 10,
+            fontSize: 15
+          }
+        }
+      },
+      plugins: {
+        datalabels: {
+          formatter: (value, ctx) => {
+            let percentage = (value).toFixed(2) + "%";
+            return percentage;
+          },
+
+          color: 'white',
+          labels: {
+            title: {
+              font: {
+                size: '16'
+              }
             }
-          }]
+          }
         }
       }
     });
   }
+
+  /**
+   * Convert a base64 string in a Blob according to the data and contentType.
+   * 
+   * @param b64Data {String} Pure base64 string without contentType
+   * @param contentType {String} the content type of the file i.e (image/jpeg - image/png - text/plain)
+   * @param sliceSize {Int} SliceSize to process the byteCharacters
+   * @see http://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
+   * @return Blob
+   */
+  function b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {
+      type: contentType
+    });
+    return blob;
+  }
+
 });
