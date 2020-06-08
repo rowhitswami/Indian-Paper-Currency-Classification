@@ -14,4 +14,4 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 UPLOAD_FOLDER = 'app/static/uploads/'
 FLASK_SECRET_KEY = os.urandom(12).hex()
 MODEL_PATH = 'app/model/model.h5'
-WTF_CSRF_TIME_LIMIT = 600
+WTF_CSRF_TIME_LIMIT = 1800
