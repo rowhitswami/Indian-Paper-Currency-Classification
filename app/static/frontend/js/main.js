@@ -103,7 +103,6 @@ $(document).ready(function () {
 
     var form_data = new FormData($('#upload-file')[0]);
     form_data.set("file", blob, image_name);
-    console.log(form_data)
     $ajaxPost(form_data)
   });
 
@@ -171,7 +170,8 @@ $(document).ready(function () {
       options: {
         title: {
           display: true,
-          text: "Probability of Predictions"
+          text: "Probability of Predictions",
+          fontSize: '17'
         },
         responsive: true,
         legend: {
@@ -181,20 +181,19 @@ $(document).ready(function () {
             boxWidth: 10,
             fontSize: 15
           }
-        }
-      },
-      plugins: {
-        datalabels: {
-          formatter: (value, ctx) => {
-            let percentage = (value).toFixed(2) + "%";
-            return percentage;
-          },
-
-          color: 'white',
-          labels: {
-            title: {
-              font: {
-                size: '16'
+        },
+        plugins: {
+          datalabels: {
+            formatter: (value, ctxB) => {
+              let percentage = parseFloat(value).toFixed(2);
+              return (percentage < 5) ? null : percentage+"%";
+            },
+            color: 'white',
+            labels: {
+              title: {
+                font: {
+                  size: '13'
+                }
               }
             }
           }
