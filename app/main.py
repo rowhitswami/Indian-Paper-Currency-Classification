@@ -6,12 +6,12 @@ from werkzeug.utils import secure_filename
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from sentry_sdk.integrations.flask import FlaskIntegration
 from flask import Flask, request, redirect, url_for, render_template, jsonify
-from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, LABELS, WTF_CSRF_TIME_LIMIT
+from config import FLASK_SECRET_KEY, UPLOAD_FOLDER, ALLOWED_EXTENSIONS, LABELS, WTF_CSRF_TIME_LIMIT, SENTRY_INIT
 from processing import get_label, upload_file_to_s3, allowed_file
 
 # Sentry Initialization
 sentry_sdk.init(
-    dsn="https://31fb27dd412f4ad39abec5308a6bedd4@o397473.ingest.sentry.io/5251962",
+    dsn=SENTRY_INIT,
     integrations=[FlaskIntegration()]
 )
 

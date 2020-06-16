@@ -15,3 +15,4 @@ UPLOAD_FOLDER = 'app/static/uploads/'
 FLASK_SECRET_KEY = os.environ.get("ICP_FLASK_SECRET_KEY")
 MODEL_PATH = 'app/model/model.h5'
 WTF_CSRF_TIME_LIMIT = 1800
+SENTRY_INIT= os.environ.get("SENTRY_INIT")
