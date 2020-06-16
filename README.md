@@ -95,7 +95,7 @@ If you'd like to request a new function, feel free to do so by opening an issue 
 [<img target="_blank" src="https://sentry-brand.storage.googleapis.com/sentry-logo-black.png" width=270>](https://www.sentry.io/) [<img target="_blank" src="https://openjsf.org/wp-content/uploads/sites/84/2019/10/jquery-logo-vertical_large_square.png" width=100>](https://jquery.com/)
 
 ## Team
-[![Rohit Swami](https://avatars1.githubusercontent.com/u/16516296?v=3&s=144)](https://github.com/rowhitswami) |
+[![Rohit Swami](https://avatars1.githubusercontent.com/u/16516296?v=3&s=144)](https://rohitswami.com/) |
 -|
 [Rohit Swami](https://rohitswami.com/) |)
 
@@ -116,4 +116,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ## Credits :tada:
-- [Google Images Download](https://github.com/hardikvasa/google-images-download) - This project coulnn't has been possible without this tool. It saved my enormous amount of time while collecting the data. A huge shout-out to its creator [Hardik Vasa](https://github.com/hardikvasa).
+- [Google Images Download](https://github.com/hardikvasa/google-images-download) - This project wouldn't have been possible without this tool. It saved my enormous amount of time while collecting the data. A huge shout-out to its creator [Hardik Vasa](https://github.com/hardikvasa).
