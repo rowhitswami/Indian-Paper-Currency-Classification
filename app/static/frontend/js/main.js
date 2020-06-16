@@ -1,8 +1,5 @@
 $(document).ready(function () {
-  Sentry.init({
-    dsn: 'https://5737f2ff4a084bb9a525d5b5f7f5ea85@o397473.ingest.sentry.io/5252172'
-  });
-
+  
   toastr.options = {
     "closeButton": false,
     "debug": false,
