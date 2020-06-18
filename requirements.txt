@@ -26,7 +26,7 @@ PyYAML==5.3.1
 scipy==1.4.1
 sentry-sdk[flask]==0.14.4
 six==1.14.0
-tensorflow==1.14.0
+tensorflow==1.15.2
 termcolor==1.1.0
 Werkzeug==1.0.1
 wrapt==1.12.1
