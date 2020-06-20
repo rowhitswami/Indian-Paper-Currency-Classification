@@ -1,9 +1,26 @@
 # Indian Paper Curreny Prediction :india: 
 
+## Table of Content
+  * [Demo](#demo)
+  * [Overview](#overview)
+  * [Motivation](#motivation)
+  * [Technical Aspect](#technical-aspect)
+  * [Installation](#installation)
+  * [Run](#run)
+  * [Deployement on Heroku](#deployement-on-heroku)
+  * [Directory Tree](#directory-tree)
+  * [To Do](#to-do)
+  * [Bug / Feature Request](#bug---feature-request)
+  * [Technologies Used](#technologies-used)
+  * [Team](#team)
+  * [License](#license)
+  * [Credits](#credits)
+
+
 ## Demo
 Link: [https://indian-currency-prediction.herokuapp.com](https://indian-currency-prediction.herokuapp.com/)
 
-[![](https://i.imgur.com/FQm8uUg.png)](https://indian-currency-prediction.herokuapp.com/)
+[![](https://i.imgur.com/5gj4USj.png)](https://indian-currency-prediction.herokuapp.com/)
 
 ## Overview
 This is a simple image classification Flask app trained on the top of Keras API. The trained model (`app/model/model.h5`) takes an image (Indian Paper Currency) as an input and predict the class of image from __10, 20, 50, 100, 200, 500, 2000__ denomination.
@@ -19,7 +36,7 @@ This project is divided into two part:
     - Used __Amazon S3 Bucket__ to store the uploaded image and predictions.
     - Used __CSRF Token__ to protect against CSRF attacks.
     - Used __Sentry__ to catch the exception on the back-end.
-    - After uploading the image, the predictions are displayed on a __Pie Chart__.
+    - After uploading the image, the predictions are displayed on a __Bar Chart__.
 
 ## Installation
 The Code is written in Python 3.7. If you don't have Python installed you can find it [here](https://www.python.org/downloads/). If you are using a lower version of Python you can upgrade using the pip package, ensuring you have the latest version of pip. To install the required packages and libraries, run this command in the project directory after [cloning](https://www.howtogeek.com/451360/how-to-clone-a-github-repository/) the repository:
@@ -77,16 +94,16 @@ Our next step would be to follow the instruction given on [Heroku Documentation]
 └── wsgi.py
 ```
 
-## To Do :white_check_mark:
+## To Do
 1. Convert the app to run without any internet connection, i.e. __PWA__.
 2. Add a better vizualization chart to display the predictions.
 
-## Bug / Feature Request :question:
+## Bug / Feature Request
 If you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/rowhitswami/Indian-Currency-Prediction/issues/new) by including your search query and the expected result.
 
 If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/rowhitswami/Indian-Currency-Prediction/issues/new). Please include sample queries and their corresponding results.
 
-## Technologies Used :rocket:
+## Technologies Used
 
 ![](https://forthebadge.com/images/badges/made-with-python.svg)
 
@@ -115,5 +132,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-## Credits :tada:
+## Credits
 - [Google Images Download](https://github.com/hardikvasa/google-images-download) - This project wouldn't have been possible without this tool. It saved my enormous amount of time while collecting the data. A huge shout-out to its creator [Hardik Vasa](https://github.com/hardikvasa).
