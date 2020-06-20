@@ -85,19 +85,13 @@ $(document).ready(function () {
       toastr.error("Please select an image to upload.", "No file chosen!")
       return false
     }
-    // Split the base64 string in data and contentType
+    
     var block = ImageURL.split(";");
-    // Get the content type of the image
-    var contentType = block[0].split(":")[1]; // In this case "image/gif"
-    // get the real base64 content of the file
-    var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
-
+    var contentType = block[0].split(":")[1];
+    var realData = block[1].split(",")[1];
     var ext = contentType.split("/")[1]
     var image_name = Math.random().toString(36).substring(4) + "." + ext
-
-    // Convert it to a blob to upload
     var blob = b64toBlob(realData, contentType);
-
     var form_data = new FormData($('#upload-file')[0]);
     form_data.set("file", blob, image_name);
     $ajaxPost(form_data)
@@ -138,7 +132,7 @@ $(document).ready(function () {
       },
       error: function (response) {
         $("#overlay").hide(200)
-        toastr.error(response.responseJSON.error, response.statusText)
+        toastr.error(response.responseJSON.error || "Please try again.", response.statusText || "Something went wrong!")
       }
     });
   };
@@ -149,52 +143,67 @@ $(document).ready(function () {
     });
     $("#barChart").remove()
     var canv = document.createElement('canvas');
-    canv.id = 'pieChart';
-    canv.height = '280';
+    canv.id = 'barChart';
+    canv.height = '250';
     $("#chart").html(canv);
     var ctxB = canv.getContext('2d');
-    var pieChart = new Chart(ctxB, {
-      plugins: [ChartDataLabels],
-      type: 'pie',
+    var barChart = new Chart(ctxB, {
+      type: 'bar',
       data: {
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: ["#F7464A", "#46BFBD", "#ffc107", "#303f9f", "#4D5360", "#1976d2", "#4caf50"],
-          hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#ffca28", "#3949ab", "#616774", "#1e88e5", "#66bb6a"]
+          backgroundColor: ["#8B4513", "#5b5bd2", "#c3cd32", "#ffa600", "#8a008aba", "#15f4ee", "#8d8e74"]
         }]
       },
       options: {
         title: {
           display: true,
           text: "Probability of Predictions",
-          fontSize: '17'
+          fontSize: '17',
+          padding: 20
         },
         responsive: true,
         legend: {
-          position: 'right',
-          labels: {
-            padding: 20,
-            boxWidth: 10,
-            fontSize: 15
-          }
+          display: false
         },
-        plugins: {
-          datalabels: {
-            formatter: (value, ctxB) => {
-              let percentage = parseFloat(value).toFixed(2);
-              return (percentage < 5) ? null : percentage+"%";
-            },
-            color: 'white',
-            labels: {
-              title: {
-                font: {
-                  size: '13'
-                }
+        scales: {
+          xAxes: [{
+              gridLines: {
+                  display:false
               }
-            }
+          }],
+          yAxes: [{
+              gridLines: {
+                  display:false
+              }   
+          }]
+      },
+      events: false,
+      tooltips: {
+          enabled: false
+      },
+      hover: {
+          animationDuration: 0
+      },
+      animation: {
+          duration: 1,
+          onComplete: function () {
+              var chartInstance = this.chart,
+                  ctx = chartInstance.ctx;
+              ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'bottom';
+
+              this.data.datasets.forEach(function (dataset, i) {
+                  var meta = chartInstance.controller.getDatasetMeta(i);
+                  meta.data.forEach(function (bar, index) {
+                      var data = dataset.data[index].toString() + '%';                            
+                      ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                  });
+              });
           }
-        }
+      }
       }
     });
   }
