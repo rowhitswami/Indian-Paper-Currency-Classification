@@ -46,7 +46,7 @@ pip install -r requirements.txt
 
 ## Run
 > STEP 1
-
+#### Linux and macOS User
 Open `.bashrc` or `.zshrc` file and add the following credentials:
 ```bash
 export AWS_ACCESS_KEY="your_aws_access_key"
@@ -59,6 +59,12 @@ export ICP_FLASK_SECRET_KEY='anything_random_but_unique'
 export SENTRY_INIT='URL_given_by_sentry'
 ```
 Note: __SENTRY_INIT__ is optional, only if you want to catch exceptions in the app, else comment/remove the dependencies and code associated with sentry in `app/main.py`
+
+#### Windows User
+Since, I don't have a system with Windows OS, here I collected some helpful resource on adding User Environment Variables in Windows.
+__Attention__: Please perform the steps given in these tutorials at your own risk. Please don't mess up with the System Variables. It can potentially damage your PC. __You should know what you're doing__. 
+- https://www.tenforums.com/tutorials/121855-edit-user-system-environment-variables-windows.html
+- https://www.onmsft.com/how-to/how-to-set-an-environment-variable-in-windows-10
 
 > STEP 2
 
@@ -118,6 +124,7 @@ If you'd like to request a new function, feel free to do so by opening an issue 
 
 ## License
 [![Apache license](https://img.shields.io/badge/license-apache-blue?style=for-the-badge&logo=appveyor)](http://www.apache.org/licenses/LICENSE-2.0e)
+
 Copyright 2020 Rohit Swami
 
 Licensed under the Apache License, Version 2.0 (the "License");
