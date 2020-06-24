@@ -62,6 +62,7 @@ Note: __SENTRY_INIT__ is optional, only if you want to catch exceptions in the a
 
 #### Windows User
 Since, I don't have a system with Windows OS, here I collected some helpful resource on adding User Environment Variables in Windows.
+
 __Attention__: Please perform the steps given in these tutorials at your own risk. Please don't mess up with the System Variables. It can potentially damage your PC. __You should know what you're doing__. 
 - https://www.tenforums.com/tutorials/121855-edit-user-system-environment-variables-windows.html
 - https://www.onmsft.com/how-to/how-to-set-an-environment-variable-in-windows-10
