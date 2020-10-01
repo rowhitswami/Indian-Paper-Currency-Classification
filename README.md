@@ -1,4 +1,5 @@
 # Indian Paper Curreny Prediction :india: 
+Predicts the image that is uploaded is of which denomination.
 
 ## Table of Content
   * [Demo](#demo)
