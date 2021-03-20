@@ -12,7 +12,7 @@ gunicorn==20.0.4
 h5py==2.10.0
 importlib-metadata==1.6.0
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 Keras==2.3.1
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.2
