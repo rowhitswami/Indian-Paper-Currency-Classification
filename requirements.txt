@@ -3,7 +3,7 @@ astor==0.8.1
 boto3== 1.12.12
 click==7.1.2
 Flask==1.1.2
-Flask-Cors==3.0.8
+Flask-Cors==3.0.9
 Flask-WTF==0.14.3
 gast==0.2.2
 google-pasta==0.2.0
