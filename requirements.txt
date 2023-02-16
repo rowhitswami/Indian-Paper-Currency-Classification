@@ -28,6 +28,6 @@ sentry-sdk[flask]==0.14.4
 six==1.14.0
 tensorflow==1.14.0
 termcolor==1.1.0
-Werkzeug==1.0.1
+Werkzeug==2.2.3
 wrapt==1.12.1
 zipp==3.1.0
