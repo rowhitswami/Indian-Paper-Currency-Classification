@@ -1,4 +1,4 @@
-# Indian Paper Curreny Prediction :india: 
+# Indian Paper Curreny Classification :india: 
 
 ## Table of Content
   * [Demo](#demo)
@@ -33,7 +33,7 @@ This project is divided into two part:
 1. Training a deep learning model using Keras. (_Not covered in this repo. I'll update the link here once I make it public._)
 2. Building and hosting a Flask web app on Heroku.
     - A user can choose image from a device or capture it using a pre-built camera.
-    - Used __Amazon S3 Bucket__ to store the uploaded image and predictions.
+    - Used __Amazon S3 Bucket__ to store the uploaded image and classification.
     - Used __CSRF Token__ to protect against CSRF attacks.
     - Used __Sentry__ to catch the exception on the back-end.
     - After uploading the image, the predictions are displayed on a __Bar Chart__.
@@ -54,7 +54,7 @@ export AWS_SECRET_KEY="your_aws_secret_key"
 export ICP_BUCKET='your_aws_bucket_name'
 export ICP_BUCKET_REGION='bucket_region'
 export ICP_UPLOAD_DIR='bucket_path_to_save_images'
-export ICP_PRED_DIR='bucket_path_to_save_predictions'
+export ICP_PRED_DIR='bucket_path_to_save_classification'
 export ICP_FLASK_SECRET_KEY='anything_random_but_unique'
 export SENTRY_INIT='URL_given_by_sentry'
 ```
@@ -103,12 +103,12 @@ Our next step would be to follow the instruction given on [Heroku Documentation]
 
 ## To Do
 1. Convert the app to run without any internet connection, i.e. __PWA__.
-2. Add a better vizualization chart to display the predictions.
+2. Add a better vizualization chart to display the classification.
 
 ## Bug / Feature Request
-If you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/rowhitswami/Indian-Currency-Prediction/issues/new) by including your search query and the expected result.
+If you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/rowhitswami/Indian-Paper-Currency-Classification/issues/new) by including your search query and the expected result.
 
-If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/rowhitswami/Indian-Currency-Prediction/issues/new). Please include sample queries and their corresponding results.
+If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/rowhitswami/Indian-Paper-Currency-Classification/issues/new). Please include sample queries and their corresponding results.
 
 ## Technologies Used
 
