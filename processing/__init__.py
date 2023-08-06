@@ -6,7 +6,8 @@ from config import *
 from PIL import Image
 import tensorflow as tf
 from keras.models import load_model
-from keras.backend import set_session
+from tensorflow.compat.v1.keras.backend import set_session
+
 from keras.preprocessing.image import img_to_array, load_img
 global graph
 global model
@@ -71,7 +72,7 @@ def compress_image(file_path):
         img = Image.open(file_path)
         img_width = img.size[0] * 20 // 100
         img_height = img.size[1] * 20 // 100
-        img = img.resize((img_width,img_height),Image.ANTIALIAS)
+        img = img.resize((img_width,img_height),Image.LANCZOS)
         img.save(file_path, optimize=True,quality=50)
         return True
     except FileNotFoundError:
