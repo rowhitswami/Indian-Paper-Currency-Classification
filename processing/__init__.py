@@ -7,8 +7,7 @@ from PIL import Image
 import tensorflow as tf
 from keras.models import load_model
 from tensorflow.compat.v1.keras.backend import set_session
-
-from keras.preprocessing.image import img_to_array, load_img
+from tensorflow.keras.utils import img_to_array, load_img
 global graph
 global model
 
