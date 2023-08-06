@@ -6,25 +6,13 @@ from config import *
 from PIL import Image
 import tensorflow as tf
 from keras.models import load_model
-from tensorflow.compat.v1.keras.backend import set_session
 from tensorflow.keras.utils import img_to_array, load_img
-global graph
-global model
 
-# Tensorflow config
-config = tf.compat.v1.ConfigProto(device_count = {'GPU': 0})
-sess = tf.compat.v1.Session(config=config)
-graph = tf.compat.v1.get_default_graph()
-set_session(sess)
 model = load_model(MODEL_PATH)
 
 def get_label(filename, file_path):
-    global sess
-    global graph
     processed_image = process_image(file_path)
-    with graph.as_default():
-        set_session(sess)
-        classes = model.predict(processed_image)
+    classes = model.predict(processed_image)
     predicted_labels = classes.tolist()[0]
     saved_predictions = save_prediction_to_s3(filename, predicted_labels)
     if saved_predictions:
